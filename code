@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valentine's Day Invitation</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; }
+    img { max-width: 90vw; height: auto; display:block; margin: 10px auto; }
+    button { cursor: pointer; }
+  </style>
+
+  <!-- React (UMD) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Babel for in-browser JSX (fine for tiny demos / Pages) -->
+  <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    const NO_PHRASES = [
+      "Не 💔",
+      "Коте моля теее 🥺",
+      "Моляяя ",
+    ];
+
+    function App() {
+      const [noClicks, setNoClicks] = useState(0);
+      const [isValentine, setIsValentine] = useState(false);
+      const yesButtonSize = (noClicks * 20) + 16;
+
+      // If these Tenor page URLs don't show a GIF, replace with any direct image/GIF URL.
+      const firstImg = "https://media.tenor.com/0Z9y3vWfP2QAAAAi/rose-cat.gif";
+      const secondImg = "https://media.tenor.com/6m5X1WJ0R7cAAAAd/kiss.gif";
+
+      const handleNo = () => setNoClicks(prev => prev + 1);
+      const handleYes = () => setIsValentine(true);
+
+      const noText = noClicks === 0
+        ? "Не"
+        : NO_PHRASES[Math.min(noClicks - 1, NO_PHRASES.length - 1)];
+
+      return (
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "100vh",
+          textAlign: "center",
+          padding: 20
+        }}>
+          {!isValentine ? (
+            <>
+              <img src={firstImg} alt="rose cat" />
+              <h1>Ще бъдеш ли моята валентинка?🙂</h1>
+
+              <div>
+                <button
+                  onClick={handleYes}
+                  style={{
+                    fontSize: `${yesButtonSize}px`,
+                    margin: "10px",
+                    padding: "10px 20px",
+                    backgroundColor: "green",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                  }}
+                >
+                  ДА
+                </button>
+
+                <button
+                  onClick={handleNo}
+                  style={{
+                    fontSize: "16px",
+                    margin: "10px",
+                    padding: "10px 20px",
+                    backgroundColor: "red",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                  }}
+                >
+                  {noText}
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <img src={secondImg} alt="kiss" />
+              <div style={{ fontSize: "48px", color: "pink", fontWeight: "bold" }}>
+                Йееееей 🥳❤️❤️❤️❤️❤️❤️🎉
+              </div>
+            </>
+          )}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+</html>
